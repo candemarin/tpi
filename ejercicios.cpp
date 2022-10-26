@@ -14,19 +14,19 @@ using namespace std;
 
 /******++++**************************** EJERCICIO minasAdyacentes ***********+++***********************/
 
-bool coordenadaValida(int c, int n) { //auxiliar
-    return 0 <= c && c < n;
-}
+int minasAdyacentes(tablero& t, pos p){
+    int cantMinasAdyacentes = 0;
 
-int minasAdyacentes(tablero& t, pos p) {
+    for(int i=-1; i <=1; i++){
+        for(int j=-1; j<=1; j++){
+            pos posActual = {p.first + i, p.second + j};
 
-    int cantMinasAdy = 0;
+            if((i != 0 || j !=0) && posValida(t.size(), posActual) && t[posActual.first][posActual.second])
+                cantMinasAdyacentes++;
+        }
+    }
 
-    for (int i=-1; i <= 1; i++) {
-        for (int j=-1; j <= 1; j++) {
-                if (coordenadaValida(p.first + i, t.size()) && coordenadaValida(p.second + j, t[0].size()) && (i != 0 || j !=0)
-                && t[p.first + i][p.second + j]) cantMinasAdy++;
-} } return cantMinasAdy;
+    return cantMinasAdyacentes;
 }
 
 /******++++**************************** EJERCICIO plantarBanderita ***********+++***********************/

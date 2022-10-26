@@ -9,3 +9,5 @@
 
 #include "definiciones.h"
 
+bool posValida(unsigned long tableroSize, pos p);
+

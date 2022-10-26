@@ -11,3 +11,7 @@
 #include "auxiliares.h"
 
 using namespace std;
+
+bool posValida(unsigned long tableroSize, pos p){
+    return (0 <= p.first && p.first < tableroSize) && (0 <= p.second && p.second < tableroSize);
+}
