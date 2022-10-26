@@ -15,7 +15,7 @@ using namespace std;
 /******++++**************************** EJERCICIO minasAdyacentes ***********+++***********************/
 
 bool coordenadaValida(int c, int n) { //auxiliar
-    return 0 <= c < n;
+    return 0 <= c && c < n;
 }
 
 int minasAdyacentes(tablero& t, pos p) {
