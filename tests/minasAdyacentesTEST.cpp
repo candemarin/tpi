@@ -16,10 +16,10 @@ TEST(minasAdyacentesTEST, minasEnTodasAdyacentes){
     int p1 = 1;
     int p2 = 1;
     pos p = {p1,p2};
-EXPECT_EQ(minasAdyacentes(t,p),8);
+    EXPECT_EQ(minasAdyacentes(t,p),8);
 }
 
-TEST(minasAdyacentesTEST, CeroMinasAdyacentes){
+TEST(minasAdyacentesTEST, ceroMinasAdyacentes){
     vector<bool> v1 = {false, false, false};
     vector<bool> v2 = {false, false,false};
     vector<bool> v3 = {false, false, false};
@@ -39,4 +39,23 @@ TEST(minasAdyacentesTEST, pEnBorde){
     int p2 = 0;
     pos p = {p1,p2};
     EXPECT_EQ(minasAdyacentes(t,p),2);
+}
+
+TEST(minasAdyacentesTEST, tableroCompleto){
+    tablero t = {{true, false, true, true},
+                 {false, true, false, true},
+                 {false, false, false, true},
+                 {true, true, false, false}};
+
+    vector<vector<int>> valores = {{1, 3, 3, 2},
+                                   {2, 2, 5, 3},
+                                   {3, 3, 4, 1},
+                                   {1, 1, 2, 1}};
+
+    for(int i = 0; i < t.size() - 1; i++){
+        for(int j = 0; j < t[i].size() - 1; j++){
+            pos p = {i, j};
+            EXPECT_EQ(minasAdyacentes(t, p), valores[i][j]);
+        }
+    }
 }
