@@ -32,7 +32,13 @@ int minasAdyacentes(tablero& t, pos p){
 /******++++**************************** EJERCICIO plantarBanderita ***********+++***********************/
 
 void cambiarBanderita(tablero& t, jugadas& j, pos p, banderitas& b) {
-    // ...
+    auto posIt = busqueda_lineal(b, p);
+
+    if(posIt != b.end()){
+        b.erase(posIt);
+    } else {
+        b.push_back(p);
+    }
 }
 
 /******++++**************************** EJERCICIO perdio ***********+++***********************/
