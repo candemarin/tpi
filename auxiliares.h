@@ -10,6 +10,10 @@
 
 bool posValida(unsigned long tableroSize, pos p);
 
+bool estaEnJugadas(pos p, int m, jugadas j);
+
+bool tieneBanderita(pos p, banderitas b);
+
 template <typename T>
 typename vector<T>::iterator busqueda_lineal(vector<T>& vec, T elem){
     auto it = vec.begin();
