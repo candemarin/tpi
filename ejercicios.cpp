@@ -65,17 +65,23 @@ bool gano(tablero& t, jugadas& j) {
 
 /******++++**************************** EJERCICIO jugarPlus ***********+++***********************/
 void jugarPlus(tablero& t, banderitas& b, pos p, jugadas& j) {
- if (minasAdyacentes(t,p) > 0) j.push_back({p, minasAdyacentes(t,p)});
-    while (minasAdyacentes(t,p) == 0 && p.first < t.size() && p.second < t[0].size())
-        for(int i=-1; i <=1; i++){
-            for(int r=-1; r<=1; r++){
-                if((i != 0 || r !=0) && posValida(t.size(), p) && !t[p.first][p.second] && !estaEnJugadas(p, minasAdyacentes(t, p), j) && !tieneBanderita(p,b))
-                    j.push_back({p, minasAdyacentes(t, p)});
-                p = {p.first + i, p.second + r};
+    j.push_back({p, minasAdyacentes(t, p)});
+    for (int w = -1; w <= 1; w++) {
+        for (int y = -1; y <= 1; y++) {
+            while (minasAdyacentes(t, p) == 0 && p.first < t.size() && p.second < t[0].size()) {
+                for (int i = -1; i <= 1; i++) {
+                    for (int r = -1; r <= 1; r++) {
+                        pos posActual = {p.first + i, p.second + r};
+                        if ((i != 0 || r != 0) && posValida(t.size(), p) && !t[posActual.first][posActual.second] &&
+                            !estaEnJugadas(p, minasAdyacentes(t, p), j) && !tieneBanderita(p, b))
+                            j.push_back({posActual, minasAdyacentes(t, p)});
+                    }
+                }
+                p = {p.first + w, p.second + y};
             }
         }
     }
-
+}
 
 /******++++**************************** EJERCICIO sugerirAutomatico121 ***********+++***********************/
 bool sugerirAutomatico121(tablero& t, banderitas& b, jugadas& j, pos& p) {

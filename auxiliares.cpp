@@ -29,3 +29,14 @@ bool tieneBanderita(pos p, banderitas b) {
         if (b[i] == p) tiene = true;
     } return tiene;
 }
+
+bool mismasJugadas(jugadas j1, jugadas j2) {
+    bool mismasJug = false;
+    int cantidad =0;
+    for (int i =0; i< j1.size(); i++) {
+        for (int r= 0; r < j2.size(); r++) {
+            if ((j1[i] == j2[r])) cantidad++;
+        }
+    } if (cantidad == j1.size()) mismasJug =  true;
+            return mismasJug;
+}
