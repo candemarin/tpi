@@ -40,3 +40,31 @@ bool mismasJugadas(jugadas j1, jugadas j2) {
     } if (cantidad == j1.size()) mismasJug =  true;
             return mismasJug;
 }
+
+bool esAdyacente121(jugadas j, pos p) {
+    bool esAdy121 = false;
+
+    if (esAdyVertical121(j,p) || esAdyHorizontal121(j,p)) esAdy121 = true;
+
+    return esAdy121;
+}
+
+bool esAdyVertical121(jugadas j, pos p) {
+    bool esAdyV121 = false;
+
+    for(int i=-1; i <=1; i++) {
+        if (i != 0 && ((estaEnJugadas({p.first-1, p.second+i},1,j) && estaEnJugadas({p.first-1, p.second},2,j)) ||
+                       (estaEnJugadas({p.first+1, p.second+i},1,j) && estaEnJugadas({p.first+1, p.second},2,j)))) esAdyV121 = true;
+    }
+    return esAdyV121;
+}
+
+bool esAdyHorizontal121(jugadas j, pos p) {
+    bool esAdyH121 = false;
+
+    for(int i=-1; i <=1; i++) {
+        if (i != 0 && ((estaEnJugadas({p.first+i, p.second-1},1,j) && estaEnJugadas({p.first, p.second-1},2,j)) ||
+                       (estaEnJugadas({p.first+i, p.second+1},1,j) && estaEnJugadas({p.first, p.second+1},2,j)))) esAdyH121 = true;
+    }
+    return esAdyH121;
+}

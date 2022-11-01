@@ -16,6 +16,12 @@ bool tieneBanderita(pos p, banderitas b);
 
 bool mismasJugadas(jugadas j1, jugadas j2);
 
+bool esAdyacente121(jugadas j, pos p);
+
+bool esAdyHorizontal121(jugadas j, pos p);
+
+bool esAdyVertical121(jugadas j, pos p);
+
 template <typename T>
 typename vector<T>::iterator busqueda_lineal(vector<T>& vec, T elem){
     auto it = vec.begin();
