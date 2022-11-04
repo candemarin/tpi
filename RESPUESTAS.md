@@ -1,2 +1,4 @@
-﻿% Contesten aquí la pregunta sobre complejidad
+﻿### ¿Qué pasaría si la estructura jugadas fuera una matriz conteniendo en cada posición la cantidad de minas adyacentes (o -1 si la casilla no fue jugada)? ¿Cómo afectaría eso a la complejidad temporal de peorcaso de los procedimientos jugarPlus y sugerirAutomatico121?
 
+- En la función jugarPlus se usa una matriz de transición (hueco) que hace uso de esta estrategia. Si jugadas fuera una matriz de este estilo no haría falta el último ciclo y la función ejecutaría n pasos menos. Pero la complejidad seguiría siendo O(n).
+- En la función sugerirAutomatico121 ayudaría enormemente ya que se podría recorrer la matriz de jugadas 1 sola vez en busca de patrones 121. En consecuencia la complejidad sería O(n).
