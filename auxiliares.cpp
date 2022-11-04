@@ -16,6 +16,24 @@ bool posValida(unsigned long tableroSize, pos p){
     return (0 <= p.first && p.first < tableroSize) && (0 <= p.second && p.second < tableroSize);
 }
 
+bool hayMina(tablero& t, pos p){
+    return t[p.first][p.second];
+}
+
+int cantSinMinas(tablero& t){
+    int contador = 0;
+
+    for (int i=0; i < t.size(); i++) {
+        for (int j = 0; j < t[i].size(); j++) {
+            if (!t[i][j]){
+                contador += 1;
+            }
+        }
+    }
+
+    return contador;
+}
+
 bool estaEnJugadas(pos p, int m, jugadas j) {
     bool esta = false;
     for (int i=0; i < j.size(); i++) {
@@ -41,30 +59,50 @@ bool mismasJugadas(jugadas j1, jugadas j2) {
             return mismasJug;
 }
 
-bool esAdyacente121(jugadas j, pos p) {
-    bool esAdy121 = false;
-
-    if (esAdyVertical121(j,p) || esAdyHorizontal121(j,p)) esAdy121 = true;
-
-    return esAdy121;
+bool posEnJugadas(tablero &t, jugadas &j, pos p) {
+    return busquedaLineal(j, {p, minasAdyacentes(t, p)}) != j.end();
 }
 
-bool esAdyVertical121(jugadas j, pos p) {
-    bool esAdyV121 = false;
+bool es121Vert(tablero& t, jugadas& j, int index){
+    pos arriba = {j[index].first.first, j[index].first.second - 1};
+    pos abajo = {j[index].first.first, j[index].first.second + 1};
 
-    for(int i=-1; i <=1; i++) {
-        if (i != 0 && ((estaEnJugadas({p.first-1, p.second+i},1,j) && estaEnJugadas({p.first-1, p.second},2,j)) ||
-                       (estaEnJugadas({p.first+1, p.second+i},1,j) && estaEnJugadas({p.first+1, p.second},2,j)))) esAdyV121 = true;
-    }
-    return esAdyV121;
+    return busquedaLineal(j, {arriba, 1}) != j.end() && busquedaLineal(j, {abajo, 1}) != j.end();
 }
 
-bool esAdyHorizontal121(jugadas j, pos p) {
-    bool esAdyH121 = false;
+bool es121Hor(jugadas& j, int index){
+    pos izq = {j[index].first.first - 1, j[index].first.second};
+    pos der = {j[index].first.first + 1, j[index].first.second};
 
-    for(int i=-1; i <=1; i++) {
-        if (i != 0 && ((estaEnJugadas({p.first+i, p.second-1},1,j) && estaEnJugadas({p.first, p.second-1},2,j)) ||
-                       (estaEnJugadas({p.first+i, p.second+1},1,j) && estaEnJugadas({p.first, p.second+1},2,j)))) esAdyH121 = true;
+    return busquedaLineal(j, {izq, 1}) != j.end() && busquedaLineal(j, {der, 1}) != j.end();
+}
+
+bool sugerenciaValidaVert(tablero& t, banderitas& b, jugadas& j, int index, pos& p){
+    pos sug1 = {j[index].first.first - 1, j[index].first.second};
+    pos sug2 = {j[index].first.first + 1, j[index].first.second};
+
+    if (posValida(t.size(), sug1) && !posEnJugadas(t, j, sug1) && busquedaLineal(b, sug1) == b.end()){
+        p = sug1;
+        return true;
+    } else if (posValida(t.size(), sug2) && !posEnJugadas(t, j, sug2) && busquedaLineal(b, sug2) == b.end()){
+        p = sug2;
+        return true;
     }
-    return esAdyH121;
+
+    return false;
+}
+
+bool sugerenciaValidaHor(tablero&t, banderitas& b, jugadas& j, int index, pos& p){
+    pos sug1 = {j[index].first.first, j[index].first.second - 1};
+    pos sug2 = {j[index].first.first, j[index].first.second + 1};
+
+    if (posValida(t.size(), sug1) && !posEnJugadas(t, j, sug1) && busquedaLineal(b, sug1) == b.end()){
+        p = sug1;
+        return true;
+    } else if (posValida(t.size(), sug2) && !posEnJugadas(t, j, sug2) && busquedaLineal(b, sug2) == b.end()){
+        p = sug2;
+        return true;
+    }
+
+    return false;
 }
