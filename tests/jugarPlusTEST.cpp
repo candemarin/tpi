@@ -9,11 +9,11 @@ using namespace std;
 
 TEST(jugarPlusTEST, colocarJugadasMinasEnBorde){
     tablero t = {
-            { cMINA,  cMINA,  cMINA, cMINA, cMINA },
-            { cMINA, cVACIA, cVACIA, cVACIA,  cMINA },
-            { cMINA, cVACIA,  cVACIA, cVACIA, cMINA },
+            { cMINA,  cMINA,  cMINA,  cMINA, cMINA },
             { cMINA, cVACIA, cVACIA, cVACIA, cMINA },
-            { cMINA,  cMINA, cMINA,  cMINA, cMINA },
+            { cMINA, cVACIA, cVACIA, cVACIA, cMINA },
+            { cMINA, cVACIA, cVACIA, cVACIA, cMINA },
+            { cMINA,  cMINA,  cMINA,  cMINA, cMINA },
     };
     jugadas j = {};
 

@@ -54,18 +54,18 @@ TEST(sugerir121TEST, HaySugerencia121Vertical){
 }
 
 tablero t3 = {
-        { cVACIA,  cMINA,  cVACIA, cMINA, cVACIA },
-        { cVACIA, cVACIA, cVACIA, cVACIA,  cVACIA },
-        { cVACIA, cVACIA,  cVACIA, cVACIA, cVACIA },
+        { cVACIA,  cMINA, cVACIA,  cMINA, cVACIA },
         { cVACIA, cVACIA, cVACIA, cVACIA, cVACIA },
-        { cMINA,  cVACIA, cVACIA,  cVACIA, cVACIA },
+        { cVACIA, cVACIA, cVACIA, cVACIA, cVACIA },
+        { cVACIA, cVACIA, cVACIA, cVACIA, cVACIA },
+        { cMINA,  cVACIA, cVACIA, cVACIA, cVACIA },
 };
 jugadas jugadasValidas3 = {
-        jugada(pos(0, 4), 1),
-        jugada(pos(1, 3), 1),jugada(pos(1, 2), 2),
-        jugada(pos(2, 0), 1),jugada(pos(1, 1), 1),
-        jugada(pos(3, 0), 1),jugada(pos(3, 1), 1),
-        jugada(pos(4, 1), 1),jugada(pos(4, 3), 0),
+        jugada(pos(0, 4), 1),jugada(pos(1, 3), 1),
+        jugada(pos(1, 2), 2),jugada(pos(2, 0), 1),
+        jugada(pos(1, 1), 1),jugada(pos(3, 0), 1),
+        jugada(pos(3, 1), 1),jugada(pos(4, 1), 1),
+        jugada(pos(4, 3), 0),
 };
 
 pos p3 = {2,2};
