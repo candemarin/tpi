@@ -14,15 +14,13 @@ bool hayMina(tablero& t, pos p);
 
 int cantSinMinas(tablero&t);
 
-bool estaEnJugadas(pos p, int m, jugadas j);
-
-bool tieneBanderita(pos p, banderitas b);
-
 bool mismasJugadas(jugadas j1, jugadas j2);
 
 bool posEnJugadas(tablero&t, jugadas& j, pos p);
 
-bool es121Vert(tablero& t, jugadas& j, int index);
+void rellenar(tablero& t, banderitas& b, pos p, jugadas& j);
+
+bool es121Vert(jugadas& j, int index);
 
 bool es121Hor(jugadas& j, int index);
 

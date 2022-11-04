@@ -61,22 +61,11 @@ bool gano(tablero& t, jugadas& j) {
 
 /******++++**************************** EJERCICIO jugarPlus ***********+++***********************/
 
-void jugarPlus(tablero& t, banderitas& b, pos p, jugadas& j) {
-    j.push_back({p, minasAdyacentes(t, p)});
-    for (int w = -1; w <= 1; w++) {
-        for (int y = -1; y <= 1; y++) {
-            while (minasAdyacentes(t, p) == 0 && p.first < t.size() && p.second < t[0].size()) {
-                for (int i = -1; i <= 1; i++) {
-                    for (int r = -1; r <= 1; r++) {
-                        pos posActual = {p.first + i, p.second + r};
-                        if ((i != 0 || r != 0) && posValida(t.size(), p) && !t[posActual.first][posActual.second] &&
-                            !estaEnJugadas(p, minasAdyacentes(t, p), j) && !tieneBanderita(p, b))
-                            j.push_back({posActual, minasAdyacentes(t, p)});
-                    }
-                }
-                p = {p.first + w, p.second + y};
-            }
-        }
+void jugarPlus(tablero& t, banderitas& b, pos p, jugadas& j){
+    if(minasAdyacentes(t, p) != 0){
+        j.push_back(jugada(p, minasAdyacentes(t, p)));
+    } else {
+        rellenar(t, b, p, j);
     }
 }
 
@@ -85,8 +74,11 @@ void jugarPlus(tablero& t, banderitas& b, pos p, jugadas& j) {
 bool sugerirAutomatico121(tablero& t, banderitas& b, jugadas& j, pos& p) {
     for(int i = 0; i < j.size(); i++){
         if(j[i].second == 2){
-            if ((es121Vert(t, j, i) && sugerenciaValidaVert(t, b, j, i, p)) ||
-                (es121Hor(j, i) && sugerenciaValidaHor(t, b, j, i, p))){
+            bool condicion121 =
+                    (es121Hor(j, i) && sugerenciaValidaHor(t, b, j, i , p)) ||
+                    (es121Vert(j, i ) && sugerenciaValidaVert(t, b, j, i, p));
+
+            if(condicion121){
                 return true;
             }
         }
