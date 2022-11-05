@@ -66,7 +66,25 @@ TEST(jugarPlusTEST, casoLimite){
                    jugada({1,0}, 0), jugada({1,1}, 0), jugada({1,2}, 0),
                    jugada({2,0}, 0), jugada({2,1}, 0), jugada({2,2}, 0)};
 
-    jugarPlus(t,b,p,j);
+    jugarPlus(t, b, p, j);
+
+    ASSERT_TRUE(esPermutacion(j, res));
+}
+
+TEST(jugarPlusTEST, sinRelleno){
+    tablero t = {
+            {cMINA, cMINA, cMINA},
+            {cMINA, cVACIA, cMINA},
+            {cMINA, cMINA, cMINA}
+    };
+
+    banderitas b = {};
+    pos p = {1,1};
+    jugadas j = {};
+
+    jugadas res = {jugada({1,1}, 8)};
+
+    jugarPlus(t, b, p, j);
 
     ASSERT_TRUE(esPermutacion(j, res));
 }
