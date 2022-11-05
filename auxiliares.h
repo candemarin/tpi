@@ -14,19 +14,11 @@ bool hayMina(tablero& t, pos p);
 
 int cantSinMinas(tablero&t);
 
-bool mismasJugadas(jugadas j1, jugadas j2);
-
 bool posEnJugadas(tablero&t, jugadas& j, pos p);
 
 void rellenar(tablero& t, banderitas& b, pos p, jugadas& j);
 
-bool es121Vert(jugadas& j, int index);
-
-bool es121Hor(jugadas& j, int index);
-
-bool sugerenciaValidaVert(tablero& t, banderitas& b, jugadas& j, int index, pos& p);
-
-bool sugerenciaValidaHor(tablero&t, banderitas& b, jugadas& j, int index, pos& p);
+bool sugerencia121Valida(tablero& t, banderitas& b, jugadas& j, int index, pos& p);
 
 template <typename T>
 typename vector<T>::iterator busquedaLineal(vector<T>& vec, T elem){
@@ -39,3 +31,8 @@ typename vector<T>::iterator busquedaLineal(vector<T>& vec, T elem){
     return it;
 }
 
+/*
+ * Usadas solo en TESTS
+ */
+
+bool esPermutacion(jugadas& v, jugadas& w);

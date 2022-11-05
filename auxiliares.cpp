@@ -37,20 +37,12 @@ int cantSinMinas(tablero& t){
 }
 
 
-bool mismasJugadas(jugadas j1, jugadas j2) {
-    bool mismasJug = false;
-    int cantidad =0;
-    for (int i =0; i< j1.size(); i++) {
-        for (int r= 0; r < j2.size(); r++) {
-            if ((j1[i] == j2[r])) cantidad++;
-        }
-    } if (cantidad == j1.size()) mismasJug =  true;
-            return mismasJug;
-}
-
-
 bool posEnJugadas(tablero &t, jugadas &j, pos p) {
     return busquedaLineal(j, {p, minasAdyacentes(t, p)}) != j.end();
+}
+
+bool posEnBanderitas(banderitas& b, pos p){
+    return busquedaLineal(b, p) != b.end();
 }
 
 
@@ -60,19 +52,21 @@ void rellenar(tablero& t, banderitas& b, pos p, jugadas& j){
 
     cola.reserve(4 * t.size());
 
-    for(auto& x : cola){
+    for(int i = 0; i < cola.size(); i++){
+        pos x = cola[i];
         hueco[x.first][x.second] = minasAdyacentes(t, x);
 
         if(minasAdyacentes(t, x) == 0){
-            pos arriba = {x.first, x.second - 1};
-            pos derecha = {x.first + 1, x.second};
-            pos abajo = {x.first, x.second + 1};
-            pos izquierda = {x.first - 1, x.second};
+            // Recorre pos adyacentes a x y va agregando a la cola las que cumplen las condiciones
+            for(int r = -1; r <= 1; r++){
+                for(int k = -1; k <= 1; k++){
+                    pos posActual = {x.first + r, x.second + k};
 
-            if(posValida(t.size(), arriba)) cola.push_back(arriba);
-            if(posValida(t.size(), derecha)) cola.push_back(derecha);
-            if(posValida(t.size(), abajo)) cola.push_back(abajo);
-            if(posValida(t.size(), izquierda)) cola.push_back(izquierda);
+                    if(posValida(t.size(), posActual) && busquedaLineal(cola, posActual) == cola.end()){
+                        cola.push_back(posActual);
+                    }
+                }
+            }
         }
     }
 
@@ -85,50 +79,78 @@ void rellenar(tablero& t, banderitas& b, pos p, jugadas& j){
     }
 }
 
+bool sugerencia121Valida(tablero& t, banderitas& b, jugadas& j, int index, pos& p){
+    // Verifica si es 121 horizontal
+    pos izq = {j[index].first.first, j[index].first.second - 1};
+    pos der = {j[index].first.first, j[index].first.second + 1};
 
-bool es121Vert(jugadas& j, int index){
-    pos arriba = {j[index].first.first, j[index].first.second - 1};
-    pos abajo = {j[index].first.first, j[index].first.second + 1};
+    bool es121Hor =
+            busquedaLineal(j, {izq, 1}) != j.end() &&
+            busquedaLineal(j, {der, 1}) != j.end();
 
-    return busquedaLineal(j, {arriba, 1}) != j.end() && busquedaLineal(j, {abajo, 1}) != j.end();
-}
+    // Busca una sugerencia 121 horizontal válida
+    if(es121Hor){
+        pos sug1 = {j[index].first.first - 1, j[index].first.second};
+        pos sug2 = {j[index].first.first + 1, j[index].first.second};
 
+        if (posValida(t.size(), sug1) && !posEnJugadas(t, j, sug1) && !posEnBanderitas(b, sug1)){
+            p = sug1;
+            return true;
+        } else if (posValida(t.size(), sug2) && !posEnJugadas(t, j, sug2) && !posEnBanderitas(b, sug2)){
+            p = sug2;
+            return true;
+        }
+    }
 
-bool es121Hor(jugadas& j, int index){
-    pos izq = {j[index].first.first - 1, j[index].first.second};
-    pos der = {j[index].first.first + 1, j[index].first.second};
+    // Verifica si es 121 vertical
+    pos arriba = {j[index].first.first - 1, j[index].first.second};
+    pos abajo = {j[index].first.first + 1, j[index].first.second};
 
-    return busquedaLineal(j, {izq, 1}) != j.end() && busquedaLineal(j, {der, 1}) != j.end();
-}
+    bool es121Ver =
+            busquedaLineal(j, {arriba, 1}) != j.end() &&
+            busquedaLineal(j, {abajo, 1}) != j.end();
 
+    // Busca una sugerencia 121 veritcal válida
+    if(es121Ver){
+        pos sug1 = {j[index].first.first, j[index].first.second - 1};
+        pos sug2 = {j[index].first.first, j[index].first.second + 1};
 
-bool sugerenciaValidaVert(tablero& t, banderitas& b, jugadas& j, int index, pos& p){
-    pos sug1 = {j[index].first.first - 1, j[index].first.second};
-    pos sug2 = {j[index].first.first + 1, j[index].first.second};
-
-    if (posValida(t.size(), sug1) && !posEnJugadas(t, j, sug1) && busquedaLineal(b, sug1) == b.end()){
-        p = sug1;
-        return true;
-    } else if (posValida(t.size(), sug2) && !posEnJugadas(t, j, sug2) && busquedaLineal(b, sug2) == b.end()){
-        p = sug2;
-        return true;
+        if (posValida(t.size(), sug1) && !posEnJugadas(t, j, sug1) && busquedaLineal(b, sug1) == b.end()){
+            p = sug1;
+            return true;
+        } else if (posValida(t.size(), sug2) && !posEnJugadas(t, j, sug2) && busquedaLineal(b, sug2) == b.end()){
+            p = sug2;
+            return true;
+        }
     }
 
     return false;
 }
 
 
-bool sugerenciaValidaHor(tablero&t, banderitas& b, jugadas& j, int index, pos& p){
-    pos sug1 = {j[index].first.first, j[index].first.second - 1};
-    pos sug2 = {j[index].first.first, j[index].first.second + 1};
 
-    if (posValida(t.size(), sug1) && !posEnJugadas(t, j, sug1) && busquedaLineal(b, sug1) == b.end()){
-        p = sug1;
-        return true;
-    } else if (posValida(t.size(), sug2) && !posEnJugadas(t, j, sug2) && busquedaLineal(b, sug2) == b.end()){
-        p = sug2;
-        return true;
+/*
+ * Usadas solo en TESTS
+ */
+
+int apariciones(jugada& elem, jugadas& v){
+    int contador = 0;
+    for(auto& x : v){
+        if(x == elem) contador++;
+    }
+    return contador;
+}
+
+bool esPermutacion(jugadas& v, jugadas& w){
+    if(v.size() != w.size()){
+        return false;
     }
 
-    return false;
+    for(auto& x : v){
+        if(apariciones(x, v) != apariciones(x, w)){
+            return false;
+        }
+    }
+
+    return true;
 }

@@ -43,11 +43,11 @@ bool perdio(tablero& t, jugadas& j);
 bool gano(tablero& t, jugadas& j);
 
 /*
- * Complejidad: O(n)
- * Justificación: Se recorre el vector cola una sola vez, además el vector cola en el peor de los casos puede contener
- * todas las posiciones posibles (n posiciones) con repeticiones. Las repeticiones pueden ser máximo 4 ya que cada celda
- * solo puede ser agregada por sus adyacentes a un paso. Por esta razón se reserva 4 * t.size() para el vector cola. Por
- * último recorre la matriz hueco que tiene n celdas. En total la complejidad de peor caso es O(5n) = O(n).
+ * Complejidad: O(n^2)
+ * Justificación: Se recorre el vector cola una sola vez y en cada posición se hace una busquedaLineal, además el vector
+ * cola en el peor de los casos puede contener todas las posiciones posibles (n posiciones) con repeticiones. Las
+ * repeticiones pueden ser máximo 4 ya que cada celda solo puede ser agregada por sus adyacentes a un paso. Por esta
+ * razón se reserva 4 * t.size() para el vector cola. Por último recorre la matriz hueco que tiene n celdas.
  */
 
 void jugarPlus(tablero& t, banderitas& b, pos p, jugadas& j);

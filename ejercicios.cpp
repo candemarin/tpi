@@ -71,19 +71,12 @@ void jugarPlus(tablero& t, banderitas& b, pos p, jugadas& j){
 
 /******++++**************************** EJERCICIO sugerirAutomatico121 ***********+++***********************/
 
-bool sugerirAutomatico121(tablero& t, banderitas& b, jugadas& j, pos& p) {
+bool sugerirAutomatico121(tablero& t, banderitas& b, jugadas& j, pos& p){
     for(int i = 0; i < j.size(); i++){
-        if(j[i].second == 2){
-            bool condicion121 =
-                    (es121Hor(j, i) && sugerenciaValidaHor(t, b, j, i , p)) ||
-                    (es121Vert(j, i ) && sugerenciaValidaVert(t, b, j, i, p));
-
-            if(condicion121){
-                return true;
-            }
+        if(j[i].second == 2 && sugerencia121Valida(t, b, j, i , p)){
+            return true;
         }
     }
 
     return false;
 }
-
